@@ -8,7 +8,7 @@ import "@openzeppelin/contracts@4.7.3/utils/Counters.sol";
 
 contract ChipsOfPower is ERC721, ERC721Enumerable, ERC721URIStorage  {
     using Counters for Counters.Counter;
-
+    mapping(address=>uint) public MintLimit;
     Counters.Counter private _tokenIdCounter;
     uint256 MAX_SUPPLY=1000;
     constructor() ERC721("ChipsOfPower", "CHPS") {}
@@ -16,6 +16,7 @@ contract ChipsOfPower is ERC721, ERC721Enumerable, ERC721URIStorage  {
     function safeMint(address to, string memory uri) public  {
         uint256 tokenId = _tokenIdCounter.current();
         require(tokenId<=MAX_SUPPLY,"I'm sorry all NFT's have been minted!!");
+        require(MintLimit[to]<=5,"I'm sorry you already minted enough NFT!!");
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
