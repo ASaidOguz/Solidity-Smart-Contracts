@@ -18,6 +18,7 @@ contract ChipsOfPower is ERC721, ERC721Enumerable, ERC721URIStorage  {
         require(tokenId<=MAX_SUPPLY,"I'm sorry all NFT's have been minted!!");
         require(MintLimit[to]<=5,"I'm sorry you already minted enough NFT!!");
         _tokenIdCounter.increment();
+        MintLimit[to]++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
